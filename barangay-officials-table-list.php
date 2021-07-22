@@ -86,6 +86,7 @@ if (!$_SESSION['user_data']) {
                                                 <?php
                                                     }
                                                 ?>
+                                                <th>Barangay Id</th>
                                                 <th>Position</th>
                                                 <th>Name</th>
                                                 <th>Contact</th>
@@ -108,7 +109,7 @@ if (!$_SESSION['user_data']) {
                                                     {
                                                         echo '
                                                         <tr>
-                                                           
+                                                            <td>'.$row['barangay_id'].'</td>
                                                             <td>'.$row['sPosition'].'</td>
                                                             <td>'.$row['completeName'].'</td>
                                                             <td>'.$row['pcontact'].'</td>
@@ -147,6 +148,7 @@ if (!$_SESSION['user_data']) {
                                                     {
                                                         echo '
                                                         <tr>
+                                                            <td>'.$row['barangay_id'].'</td>
                                                             <td>'.$row['sPosition'].'</td>
                                                             <td>'.$row['completeName'].'</td>
                                                             <td>'.$row['pcontact'].'</td>

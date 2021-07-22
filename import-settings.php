@@ -930,7 +930,9 @@ if (!$_SESSION['user_data']) {
     <!-- BEGIN PAGE LEVEL JS-->
     <script src="./app-assets/js/scripts/form-file-uploads.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.19/sweetalert2.all.min.js" integrity="sha512-GmIrnMvDZVTtxE+7SdmKjUr3sSvwPMtitw6osbORBDp9sKneGyB3ZjcGjNfrUQ1SlpJXET+z5Cfb0QAj678izA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
     <script>
         $(document).ready(function(){
@@ -947,76 +949,50 @@ if (!$_SESSION['user_data']) {
    success:function(data)
    {
     var payload = data.row_data;
-
     
     Swal.fire({
   title: 'Are you sure you want to upload this excel file?',
-      showDenyButton: true,
+      showDenyButton: false,
     showCancelButton: true,
     confirmButtonText: `Yes`,
-    denyButtonText: `Cancel`,
   showLoaderOnConfirm: true,
+  allowOutsideClick: false,
   preConfirm: () => {
-      console.log(payload);
-    //   var url = "/bmis_v1/php-action-scripts/import-csv-barangay-official.php?action=ImportExcelFile";
-    var url = "/bmis_v1/php-action-scripts/import-csv-barangay-official.php";
+
+  }
+}).then((result) => {
+  if (result.isConfirmed) {
+
+Swal.fire({
+  title: 'Uploading Data from Excel File...',
+  allowOutsideClick: false,
+  timer: 12000,
+  didOpen: () => {
+    Swal.showLoading()
+  },
+})
+      setTimeout(() => {
+        var url = "/bmis_v1/php-action-scripts/import-csv-barangay-official.php";
       $.ajax({
         type: 'POST',
         url: url,
-        data: {cjmanaguelod: JSON.stringify(payload)},
+        data: {excelData: JSON.stringify(payload)},
         dataType: 'json',
         error: function(xhr, textStatus, errorThrown) {
           console.log(xhr.responseText);
         },
         success: function(response) {
-            
+            Swal.fire({
+  title: 'Data Uploaded successfully.',
+  allowOutsideClick: false
+})
         }
       });
-
-    // return fetch(`/bmis_v1/php-action-scripts/login.php/${login}`)
-    //   .then(response => {
-    //     if (!response.ok) {
-    //       throw new Error(response.statusText)
-    //     }
-    //     return response.json()
-    //   })
-    //   .catch(error => {
-    //     Swal.showValidationMessage(
-    //       `Request failed: ${error}`
-    //     )
-    //   })
-  },
-  allowOutsideClick: () => !Swal.isLoading()
-}).then((result) => {
-  if (result.isConfirmed) {
-    Swal.fire({
-      title: `${result.value.login}'s avatar`,
-      imageUrl: result.value.avatar_url
-    })
+      }, 9000);
+ 
+    
   }
 })
-
-
-    // Swal.fire({
-    // title: 'Are you sure you want to upload this excel file?',
-    // showDenyButton: true,
-    // showCancelButton: true,
-    // confirmButtonText: `Yes`,
-    // denyButtonText: `Cancel`,
-    // allowOutsideClick: false,
-    // }).then((result) => {
-    // /* Read more about isConfirmed, isDenied below */
-    // if (result.isConfirmed) {
-    //     Swal.fire('Saved!', '', 'success')
-
-    // } else if (result.isDenied) {
-
-    //     Swal.fire('Changes are not saved', '', 'info')
-
-    // }
-
-
-
     $('#upload_csv')[0].reset();
    }
 

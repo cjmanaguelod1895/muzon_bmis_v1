@@ -1,6 +1,8 @@
 <?php
 
 //fetch.php
+//Include DB connection
+include ('../database/db_config.php');
 
 if(!empty($_FILES['csv_file']['name']))
 {
@@ -9,13 +11,14 @@ if(!empty($_FILES['csv_file']['name']))
  while($row = fgetcsv($file_data))
  {
   $row_data[] = array(
-   'Position'  => $row[0],
-   'Name'  => $row[1],
-   'Contact'  => $row[2],
-   'Address'  => $row[3],
-   'Startof Term'  => $row[4],
-   'End of Term'  => $row[5],
-   'Status'  => $row[6],
+   'barangay_id'  => $row[0],
+   'sPosition'  => $row[1],
+   'completeName'  => $row[2],
+   'pcontact'  => $row[3],
+   'paddress'  => $row[4],
+   'termStart'  => $row[5],
+   'termEnd'  => $row[6],
+   'status'  => $row[7],
 
   );
  }
@@ -30,18 +33,55 @@ if(!empty($_FILES['csv_file']['name']))
  
 }
 
-if (isset($_POST['cjmanaguelod'])) {
-    $dados = json_encode($_POST['cjmanaguelod'], true);
-    print json_encode(['successo' => true]);
+if (isset($_POST['excelData'])) {
+
+    $response = array(
+        'status' => 1,
+        'msg' => 'Data has been upload.'
+      );
+
+    $array = json_decode($_POST['excelData'], true);
+    foreach ($array as $row) {
+
+        $query = "SELECT  EXISTS(SELECT 1 from tblofficial where barangay_id='".$row["barangay_id"]."');";
+
+
+        $r1=mysqli_fetch_row(mysqli_query($conn, $query));
+
+        if (current($r1) == 0) {
+            $insert = "INSERT INTO tblofficial(barangay_id,sPosition, completeName, pcontact, paddress, termStart, termEnd, status ) VALUES ('".$row["barangay_id"]."','".$row["sPosition"]."', '".$row["completeName"]."', '".$row["pcontact"]."', '".$row["paddress"]."','".$row["termStart"]."','".$row["termEnd"]."','".$row["status"]."')";
+
+            $response = array(
+                'status' => 1,
+                'msg' => 'Data has been added.'
+              );
+
+              mysqli_query($conn, $insert); 
+        } 
+        else {
+            $update = "UPDATE tblofficial 
+            SET  sPosition = '".$row['sPosition']."',
+            completeName = '".$row["completeName"]."',
+            pcontact = '".$row["pcontact"]."',
+            paddress = '".$row["paddress"]."',
+            termStart = '".$row["termStart"]."',
+            termEnd = '".$row["termEnd"]."',
+            status = '".$row["status"]."'
+            WHERE barangay_id = '".$row["barangay_id"]."'"; 
+            $response = array(
+             'status' => 1,
+             'msg' => 'Data has been updated.'
+           );
+        
+           mysqli_query($conn, $update);
+
+        }
+        
+    }
+
+   echo json_encode($response);
+
+    
 }
 
-
-
-
-
-
-
 ?>
-
-
-

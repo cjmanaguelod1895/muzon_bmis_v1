@@ -6,10 +6,10 @@
 
  header("Content-Type:application/json");
 
-if (isset($_POST['cjmanaguelod'])) {
-    $dados = json_encode($_POST['cjmanaguelod'], true);
-    print json_encode(['successo' => true]);
-}
+// if (isset($_POST['excelData'])) {
+//     $dados = json_encode($_POST['excelData'], true);
+//     print json_encode(['successo' => true]);
+// }
 
 
 ?>
