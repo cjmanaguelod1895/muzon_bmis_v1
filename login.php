@@ -6,6 +6,7 @@
 <!-- BEGIN: Head-->
 <title>Muzon Segundo BMIS | Login</title>
 <?php include ('./page-layout/html-assets.php'); ?>
+<link rel="stylesheet" type="text/css" href="./app-assets/css/pages/login.css">
 <!-- END: Head-->
 <style>
 .error{
@@ -113,8 +114,8 @@
     <script src="./app-assets/js/custom/form-validation.js"></script>
     <!-- END PAGE LEVEL JS-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.19/sweetalert2.all.min.js" integrity="sha512-GmIrnMvDZVTtxE+7SdmKjUr3sSvwPMtitw6osbORBDp9sKneGyB3ZjcGjNfrUQ1SlpJXET+z5Cfb0QAj678izA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="./app-assets/js/custom/swalToast.js"></script>
 
 
     <script>
@@ -154,18 +155,14 @@
             var middleName = (response.middle_name.length !== 0) ? response.middle_name : '';
             console.log(middleName);
             var name = response.first_name + " " + middleName + " " + response.last_name;
-
-            setTimeout(() => {
-
-Swal.fire({
-
-title: "Login Successful",
-text: "Welcome, "+ name +"",
-icon: "success",
-allowOutsideClick: false,
-showConfirmButton: false
+       setTimeout(() => {
+        Toast.fire({
+  icon: 'success',
+  title: 'Login Successful',
+  text: "Welcome, "+ name +""
 })
-            }, 3000);
+           
+       }, 4000);
 
             setTimeout(() => {
                 form.trigger('reset');
@@ -177,7 +174,12 @@ showConfirmButton: false
             setTimeout(() => {
                 $('.loader').css({"display": "none"});
       $('#loginButton').css({"display": "block"});       
-            toastr.error(response.msg);
+            //toastr.error(response.msg);
+            
+            Toast.fire({
+  icon: 'error',
+  title: ""+response.msg+"",
+})
             }, 2000);
 
           }

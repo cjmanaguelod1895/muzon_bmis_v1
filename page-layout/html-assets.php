@@ -9,6 +9,18 @@
     <link rel="apple-touch-icon" href="./app-assets/images/favicon/apple-touch-icon-152x152.png">
     <link rel="shortcut icon" type="image/x-icon" href="./app-assets/images/favicon/favicon-32x32.png">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Page Account Settings -->
+    <link rel="stylesheet" type="text/css" href="./app-assets/css/pages/page-account-settings.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" type="text/css" href="./app-assets/vendors/data-tables/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="./app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="./app-assets/vendors/data-tables/css/select.dataTables.min.css">
+
+    <!-- Dropify -->
+    <link rel="stylesheet" type="text/css" href="./app-assets/vendors/dropify/css/dropify.min.css">
+
+
     <!-- BEGIN: VENDOR CSS-->
     <link rel="stylesheet" type="text/css" href="./app-assets/vendors/vendors.min.css">
     <!-- END: VENDOR CSS-->

@@ -1,6 +1,4 @@
 <?php
-
-//fetch.php
 //Include DB connection
 include ('../database/db_config.php');
 
@@ -29,7 +27,6 @@ if(!empty($_FILES['csv_file']['name']))
 
  echo json_encode($output);
 
-
  
 }
 
@@ -45,11 +42,18 @@ if (isset($_POST['excelData'])) {
 
         $query = "SELECT  EXISTS(SELECT 1 from tblofficial where barangay_id='".$row["barangay_id"]."');";
 
+     
+        $test1 = strtotime($row["termStart"]);
+        $test2 = strtotime($row["termEnd"]);
+       
+        $convertedTermStart = date('Y-m-d',$test1);
+        $convertedTermEnd = date('Y-m-d',$test2);
+        
 
         $r1=mysqli_fetch_row(mysqli_query($conn, $query));
 
         if (current($r1) == 0) {
-            $insert = "INSERT INTO tblofficial(barangay_id,sPosition, completeName, pcontact, paddress, termStart, termEnd, status ) VALUES ('".$row["barangay_id"]."','".$row["sPosition"]."', '".$row["completeName"]."', '".$row["pcontact"]."', '".$row["paddress"]."','".$row["termStart"]."','".$row["termEnd"]."','".$row["status"]."')";
+            $insert = "INSERT INTO tblofficial(barangay_id,sPosition, completeName, pcontact, paddress, termStart, termEnd, status ) VALUES ('".$row["barangay_id"]."','".$row["sPosition"]."', '".$row["completeName"]."', '".$row["pcontact"]."', '".$row["paddress"]."','".$convertedTermStart."','".$convertedTermEnd."', '".$row["status"]."' )";
 
             $response = array(
                 'status' => 1,
@@ -59,13 +63,14 @@ if (isset($_POST['excelData'])) {
               mysqli_query($conn, $insert); 
         } 
         else {
+
             $update = "UPDATE tblofficial 
             SET  sPosition = '".$row['sPosition']."',
             completeName = '".$row["completeName"]."',
             pcontact = '".$row["pcontact"]."',
             paddress = '".$row["paddress"]."',
-            termStart = '".$row["termStart"]."',
-            termEnd = '".$row["termEnd"]."',
+            termStart = '$convertedTermStart',
+            termEnd = '$convertedTermEnd',
             status = '".$row["status"]."'
             WHERE barangay_id = '".$row["barangay_id"]."'"; 
             $response = array(

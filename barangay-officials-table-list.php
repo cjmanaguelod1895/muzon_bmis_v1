@@ -11,32 +11,10 @@ if (!$_SESSION['user_data']) {
 ?>
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
+<title>BMIS | Table List</title>
 <!-- BEGIN: Head-->
+<?php include ('./page-layout/html-assets.php'); ?>
 
-<head>
-    <title>BMIS | Barangay Officials Table List</title>
-    <link rel="apple-touch-icon" href="./app-assets/images/favicon/apple-touch-icon-152x152.png">
-    <link rel="shortcut icon" type="image/x-icon" href="./app-assets/images/favicon/favicon-32x32.png">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- BEGIN: VENDOR CSS-->
-    <link rel="stylesheet" type="text/css" href="./app-assets/vendors/vendors.min.css">
-    <link rel="stylesheet" type="text/css" href="./app-assets/vendors/flag-icon/css/flag-icon.min.css">
-    <link rel="stylesheet" type="text/css" href="./app-assets/vendors/data-tables/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="./app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="./app-assets/vendors/data-tables/css/select.dataTables.min.css">
-    <!-- END: VENDOR CSS-->
-    <!-- BEGIN: Page Level CSS-->
-    <link rel="stylesheet" type="text/css" href="./app-assets/css/themes/vertical-dark-menu-template/materialize.css">
-    <link rel="stylesheet" type="text/css" href="./app-assets/css/themes/vertical-dark-menu-template/style.css">
-    <link rel="stylesheet" type="text/css" href="./app-assets/css/pages/data-tables.css">
-    <!-- END: Page Level CSS-->
-    <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="./app-assets/css/custom/custom.css">
-    
-
-
-    <!-- END: Custom CSS-->
-</head>
 <!-- END: Head-->
 
 <body class="vertical-layout page-header-light vertical-menu-collapsible vertical-dark-menu preload-transitions 2-columns" data-open="click" data-menu="vertical-dark-menu" data-col="2-columns">
@@ -66,15 +44,15 @@ if (!$_SESSION['user_data']) {
             <div class="col s12">
                 <div class="container">
                     <div class="section section-data-tables">
- 
-
                         <!-- Page Length Options -->
                         <div class="row">
+                            
                             <div class="col s12">
                                 <div class="card">
                                     <div class="card-content">
                                         <div class="row">
                                             <div class="col s12">
+                                            <a class="waves-effect waves-light modal-trigger btn gradient-45deg-amber-amber box-shadow-none border-round mr-1 mb-1" href="#add-barangay"><i class="material-icons left">add</i>Add New</a>
                                                 <table id="page-length-option" class="display">
                                                     <thead>
                                                     <tr>
@@ -178,7 +156,12 @@ if (!$_SESSION['user_data']) {
                 <div class="content-overlay"></div>
             </div>
         </div>
+            <!-- Modal -->
+    <?php include './modals/add-barangay.php' ?>
+    <!-- END: Page Modal-->
     </div>
+
+
     <!-- END: Page Main-->
 
     <!-- BEGIN: Footer-->
@@ -186,34 +169,156 @@ if (!$_SESSION['user_data']) {
     <?php include ('./page-layout/footer.php'); ?>
 
     <!-- END: Footer-->
-
-    <!-- END: Footer-->
-    <!-- BEGIN VENDOR JS-->
-    <script src="./app-assets/js/vendors.min.js"></script>
-    <!-- BEGIN VENDOR JS-->
-    <!-- BEGIN PAGE VENDOR JS-->
-    <script src="./app-assets/vendors/data-tables/js/jquery.dataTables.min.js"></script>
-    <script src="./app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"></script>
-    <script src="./app-assets/vendors/data-tables/js/dataTables.select.min.js"></script>
-    <!-- END PAGE VENDOR JS-->
-    <!-- BEGIN THEME  JS-->
-    <script src="./app-assets/js/plugins.js"></script>
-    <script src="./app-assets/js/search.js"></script>
-    <script src="./app-assets/js/custom/custom-script.js"></script>
-    <!-- END THEME  JS-->
-    <!-- BEGIN PAGE LEVEL JS-->
-    <!-- <script src="./app-assets/js/scripts/data-tables.js"></script> -->
-
-    <script src="//cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
-<script src="//cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-<script src="//cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
-<script src="//cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.0.3/js/buttons.colVis.js"></script>
+    
+    
+  <!-- BEGIN VENDOR JS-->
+  <?php include ('./page-layout/html-vendors.php');  ?>
+    <!-- END PAGE LEVEL JS-->
+  
 
 <script>
+
+(function ($) {
+    $.fn.serializeFormJSON = function () {
+
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function () {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
+})(jQuery);
+
+
+    $(function() {
+        $("#phoneNumberLabel").addClass("active");
+
+$('#pcontact').formatter({
+'pattern': '{{9999}}{{999}}{{9999}}',
+'persistent': false
+});
+
+  $("#addNewBarangayOfficial").validate({
+    onfocusout: false,
+    ignore: "",
+  rules: {
+    firstName: {
+      required: true
+    },
+    lastName: {
+      required: true
+    },
+    sPosition: {
+      required: true
+    },
+    pcontact:{
+        required: true,
+        minlength : 10,
+        maxlength : 20
+    },
+    paddress: {
+      required: true
+    },
+    termStart: {
+      required: true,
+    },
+    termEnd: {
+      required: true
+    }
+  },
+  //For custom messages
+  messages: {
+      
+    firstName: {
+      required: "Enter First Name"
+    },
+    lastName: {
+      required: "Enter Last Name"
+    },
+    sposition:{
+        required: "Please select position"
+    },
+    pcontact:{
+        required: "Enter your Contact Number"
+    },
+    paddress:{
+      required: "Enter Address"
+    },
+    termStart: {
+      required: "Enter Start Term"
+    },
+    termEnd: {
+      required: "Enter End Term"
+    }
+  },
+  errorElement: 'div',
+  errorPlacement: function (error, element) {
+    var placement = $(element).data('error');
+    if (placement) {
+      $(placement).append(error)
+    } else {
+      error.insertAfter(element);
+    }
+  },
+
+  submitHandler: function(form) {
+
+  var formData = $(form).serializeFormJSON();
+
+  console.log(formData);
+  
+      setTimeout(() => {
+        var url = "/bmis_v1/php-action-scripts/create.php";
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data: {createBarangayOfficial: JSON.stringify(formData)},
+        dataType: 'json',
+        error: function(xhr, textStatus, errorThrown) {
+          console.log(xhr.responseText);
+        },
+        success: function(response) {
+            Swal.fire({
+  title: 'Data Uploaded successfully.',
+  allowOutsideClick: false
+})
+        }
+      });
+      }, 1000);
+
+
+    }
+
+
+});
+
+
+     
+
+    $('#add-barangay').modal({
+        dismissible: false, // Modal can be dismissed by clicking outside of the modal
+  opacity: .5, // Opacity of modal background
+  inDuration: 300, // Transition in duration
+  outDuration: 200, // Transition out duration
+  startingTop: '50%', // Starting top style attribute
+  endingTop: '10%', // Ending top style attribute
+  ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+  alert("Ready");
+  console.log(modal, trigger);
+  },
+  complete: function() { alert('Closed'); } // Callback for Modal close
+    });
+    
+  });
+
        $('#page-length-option').DataTable({
         dom: 'Bfrtip',
         "scrollY": 700,
@@ -224,8 +329,7 @@ if (!$_SESSION['user_data']) {
 		"ordering": true,
 		"columnDefs": [{
 			"targets": [1], /* column index */
-			"orderable": false,
-            "className": 'noVis'
+			"orderable": false
 		},
 		{
 			"targets": [ 1 ],

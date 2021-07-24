@@ -12,23 +12,11 @@ if (!$_SESSION['user_data']) {
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 <title>BMIS | Import Data</title>
-<link rel="apple-touch-icon" href="./app-assets/images/favicon/apple-touch-icon-152x152.png">
-    <link rel="shortcut icon" type="image/x-icon" href="./app-assets/images/favicon/favicon-32x32.png">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- BEGIN: VENDOR CSS-->
-    <link rel="stylesheet" type="text/css" href="./app-assets/vendors/vendors.min.css">
-    <link rel="stylesheet" type="text/css" href="./app-assets/vendors/dropify/css/dropify.min.css">
-    <link rel="stylesheet" href="./app-assets/vendors/select2/select2.min.css" type="text/css">
-    <link rel="stylesheet" href="./app-assets/vendors/select2/select2-materialize.css" type="text/css">
-    <!-- END: VENDOR CSS-->
-    <!-- BEGIN: Page Level CSS-->
-    <link rel="stylesheet" type="text/css" href="./app-assets/css/themes/vertical-dark-menu-template/materialize.css">
-    <link rel="stylesheet" type="text/css" href="./app-assets/css/themes/vertical-dark-menu-template/style.css">
-    <link rel="stylesheet" type="text/css" href="./app-assets/css/pages/page-account-settings.css">
-    <!-- END: Page Level CSS-->
-    <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="./app-assets/css/custom/custom.css">
-    <!-- END: Custom CSS-->
+
+<!-- BEGIN: Head-->
+<?php include ('./page-layout/html-assets.php'); ?>
+
+<!-- END: Head-->
 
 
 <body class="vertical-layout page-header-light vertical-menu-collapsible vertical-dark-menu preload-transitions 2-columns   " data-open="click" data-menu="vertical-dark-menu" data-col="2-columns">
@@ -914,26 +902,11 @@ if (!$_SESSION['user_data']) {
     <!-- BEGIN: Footer-->
 
     <?php include ('./page-layout/footer.php'); ?>
-    <!-- BEGIN VENDOR JS-->
-    <script src="./app-assets/js/vendors.min.js"></script>
-    <script src="./app-assets/vendors/dropify/js/dropify.min.js"></script>
-    <!-- BEGIN VENDOR JS-->
-    <!-- BEGIN PAGE VENDOR JS-->
-    <script src="./app-assets/vendors/select2/select2.full.min.js"></script>
-    <script src="./app-assets/vendors/jquery-validation/jquery.validate.min.js"></script>
-    <!-- END PAGE VENDOR JS-->
-    <!-- BEGIN THEME  JS-->
-    <script src="./app-assets/js/plugins.js"></script>
-    <script src="./app-assets/js/search.js"></script>
-    <script src="./app-assets/js/custom/custom-script.js"></script>
-    <!-- END THEME  JS-->
-    <!-- BEGIN PAGE LEVEL JS-->
-    <script src="./app-assets/js/scripts/form-file-uploads.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.19/sweetalert2.all.min.js" integrity="sha512-GmIrnMvDZVTtxE+7SdmKjUr3sSvwPMtitw6osbORBDp9sKneGyB3ZjcGjNfrUQ1SlpJXET+z5Cfb0QAj678izA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
+    
+  <!-- BEGIN VENDOR JS-->
+  <?php include ('./page-layout/html-vendors.php');  ?>
+    <!-- END PAGE LEVEL JS-->
+  
     <script>
         $(document).ready(function(){
  $('#upload_csv').on('submit', function(event){
@@ -949,7 +922,6 @@ if (!$_SESSION['user_data']) {
    success:function(data)
    {
     var payload = data.row_data;
-    
     Swal.fire({
   title: 'Are you sure you want to upload this excel file?',
       showDenyButton: false,
