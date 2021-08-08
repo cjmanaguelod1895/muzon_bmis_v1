@@ -1,56 +1,77 @@
 <?php
-  // user exists
-  session_start();
-//Include DB connection
- include ('../database/db_config.php');
-
+session_start(); // Starting Session
+include ('../database/db_config.php');
+$error=''; // Variable To Store Error Message
 if (isset($_POST['action']) == 'login') {
+		if (empty($_POST['username']) || empty($_POST['password'])) 
+			{
+				$response = array(
+					'status' => 0,
+					'msg' => 'Username or Password is empty!'
+					);
 
-  $username = $_POST['username'];
-  $password = $_POST['password'];
-  // validation
-  $error = array(
-    'error_status' => 0
-  );
-  if (empty($username)) {
-    $error['error_status'] = 1;
-    $error['username'] = 'Username is required!';
-  }
-  if (empty($password)) {
-    $error['error_status'] = 1;
-    $error['password'] = 'Password is required!';
-  }
-  if ($error['error_status'] > 0) {
-    echo json_encode($error);
-    exit();
-  }
-  // if validation is successful
-  $hashed_password = md5($password);
-  $qry = "SELECT * from tbluser where username = '" . $username . "' and password = '" . $hashed_password . "'";
-  $result = $conn->query($qry);
-  $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+			
+			}
+		else
+		{
+			// Establishing Connection with Server by passing server_name, user_id and password as a parameter
+			// Define $username and $password
+			$username=$_POST['username'];
+			$password=$_POST['password'];
 
-  $count = mysqli_num_rows($result);
-  if ($count == 1) {
-  
-    $_SESSION['user_data'] = $row;
+			// To protect MySQL injection for Security purpose
+			$username = stripslashes($username);
+			$password = stripslashes($password);
+			$username = mysqli_real_escape_string($conn,$username);
+			$password = mysqli_real_escape_string($conn,$password);
 
-    $response = array(
-      'status' => 1,
-      'first_name' => $_SESSION['user_data']['first_name'],
-      'middle_name' => $_SESSION['user_data']['middle_name'],
-      'last_name' => $_SESSION['user_data']['last_name'],
-      'msg' => 'Login successful',
-    );
-  } else {
-    $response = array(
-      'status' => 0,
-      'msg' => 'Incorrect Username or Password.'
-    );
-  }
-  echo json_encode($response);
-  exit();
+			// SQL query to fetch information of registerd users and finds user match.
+			$query = mysqli_query($conn,"SELECT * FROM `user_account` WHERE `acc_username` = '$username' AND `status_ID` = 1");
+			$data = mysqli_fetch_array($query);
+
+			if(isset($data['acc_password']))
+			{
+				if(password_verify($password, $data['acc_password']))
+				{
+					$_SESSION['user_session'] = $data['acc_ID'];
+					$_SESSION['official_ID'] = $data['official_ID'];
+					$sql = mysqli_query($conn,"SELECT * FROM `brgy_official_detail` bod 
+						inner join ref_position rp ON rp.position_ID = bod.commitee_assignID   
+						WHERE bod.official_ID = ".$data['official_ID']."");
+					$bod = mysqli_fetch_array($sql);
+					$_SESSION['position'] = $bod['position_Name'];
+					$_SESSION['position_ID']  = $bod['commitee_assignID'];
+					
+					$response = array(
+						'status' => 1,
+						'position_name' => $bod['position_Name']
+						);
+
+					
+
+				}
+				else
+				{
+
+					print "<script>alert("+ $_SERVER['DOCUMENT_ROOT'] +") </script>";
+
+					$response = array(
+						'status' => 0,
+						'msg' => 'Incorrect Username or Password!'
+						);
+				}
+			}
+			else 
+			{
+				$response = array(
+					'status' => 0,
+					'msg' => 'Incorrect Username or Password!'
+					);
+			}
+			mysqli_close($conn); // Closing Connection
+		}
+
+		echo json_encode($response);
 }
-
 ?>
 

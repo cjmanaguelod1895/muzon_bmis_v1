@@ -108,7 +108,7 @@ if (!$_SESSION['user_data']) {
                                 </div>
                                 <div class="col s12 display-flex justify-content-end form-action mt-2">
                                     <button type="submit" class="btn indigo waves-light waves-effect mr-sm-1 mr-2"><i class="material-icons left">cloud_upload</i>Upload</button>
-                                    <button type="button" class="btn btn-light-pink waves-light waves-effect"><i class="material-icons left">cancel</i>Cancel</button>
+                                    <button type="button" id="cancelUploadBarangayOfficial" class="btn btn-light-pink waves-light waves-effect"><i class="material-icons left">cancel</i>Cancel</button>
                                 </div>
                             </form>
                             <div id="csv_file_data"></div>
@@ -909,6 +909,9 @@ if (!$_SESSION['user_data']) {
   
     <script>
         $(document).ready(function(){
+$('#cancelUploadBarangayOfficial').css({"display":"none"});
+
+
  $('#upload_csv').on('submit', function(event){
   event.preventDefault();
   $.ajax({
@@ -922,6 +925,9 @@ if (!$_SESSION['user_data']) {
    success:function(data)
    {
     var payload = data.row_data;
+
+    $('#cancelUploadBarangayOfficial').css({"display":"block"});
+
     Swal.fire({
   title: 'Are you sure you want to upload this excel file?',
       showDenyButton: false,
@@ -955,22 +961,47 @@ Swal.fire({
         },
         success: function(response) {
             Swal.fire({
-  title: 'Data Uploaded successfully.',
-  allowOutsideClick: false
-})
+             title: 'Data Uploaded successfully.',
+            allowOutsideClick: false
+        })
+        setTimeout(() => {
+            location.reload();
+        }, 4000);
         }
       });
       }, 9000);
- 
-    
   }
 })
     $('#upload_csv')[0].reset();
+
+    
+
    }
-
   })
-
   
+ });
+
+$("#cancelUploadBarangayOfficial").click(function(event){  
+    Swal.fire({
+  title: 'Are you sure you want to cancel the upload of Excel File?',
+      showDenyButton: false,
+    showCancelButton: true,
+    confirmButtonText: `Yes`,
+  showLoaderOnConfirm: true,
+  allowOutsideClick: false,
+  preConfirm: () => {
+
+  }
+}).then((result) => {
+  if (result.isConfirmed) {   
+      setTimeout(() => {
+        location.reload();
+      }, 4000); 
+    
+  }
+})
+
+
  });
 
  $(document).on('click', '#import_data', function(){
@@ -995,8 +1026,6 @@ Swal.fire({
 });
 
 </script>
-
-
 </body>
 
 </html>

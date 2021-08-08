@@ -41,7 +41,7 @@
             <div class="container">
                 <div id="login-page" class="row">
                     <div class="col s12 m6 l4 z-depth-4 card-panel border-radius-6 login-card bg-opacity-8">
-                        <form class="login-form" method="" action="" id="loginForm" novalidate="novalidate">
+                        <form class="login-form" role="form" id="loginForm">
                         <div class="row">
                                 <div class="input-field col s12">
                                     <h6 class="ml-7">Barangay Management Information System</h5>
@@ -113,18 +113,18 @@
     <!-- <script src="./app-assets/js/scripts/dashboard-ecommerce.js"></script> -->
     <script src="./app-assets/js/custom/form-validation.js"></script>
     <!-- END PAGE LEVEL JS-->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.19/sweetalert2.all.min.js" integrity="sha512-GmIrnMvDZVTtxE+7SdmKjUr3sSvwPMtitw6osbORBDp9sKneGyB3ZjcGjNfrUQ1SlpJXET+z5Cfb0QAj678izA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="./app-assets/js/custom/swalToast.js"></script>
 
 
-    <script>
+  <script>
          $('#loginForm').on('submit', function(e) {
       e.preventDefault();
       var data = new FormData($(this)[0]);
       data.append('action', 'login');
       var form = $(this);
-      var url = "/bmis_v1/php-action-scripts/login.php";
+      var url = "/BMIS_V1/php-action-scripts/login.php";
 
       var userName = $("#username").val();
       var password = $("#password").val();
@@ -148,25 +148,25 @@
         success: function(response) {
           console.log(response);
           form.find(':submit').attr('disabled', false);
+		  console.log(response);
           if (response.status == 1) {
             // handling success response
             //window.location.href = '/php_tutorial/dashboard.php';
 
-            var middleName = (response.middle_name.length !== 0) ? response.middle_name : '';
-            console.log(middleName);
-            var name = response.first_name + " " + middleName + " " + response.last_name;
+            var positionName = response.position_name;
+
        setTimeout(() => {
         Toast.fire({
   icon: 'success',
   title: 'Login Successful',
-  text: "Welcome, "+ name +""
+  text: "Welcome, "+ positionName +""
 })
            
        }, 4000);
 
             setTimeout(() => {
                 form.trigger('reset');
-                window.location.href  = "/bmis_v1/dashboard.php"; 
+                window.location.href  = "/BMIS_V1/dashboard.php"; 
               }, 7000);
 
           } else if (response.status == 0) {

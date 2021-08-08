@@ -1,13 +1,6 @@
 <?php
-
 session_start();
-
-
-if (!$_SESSION['user_data']) {
-    header('Location: /bmis_v1/login.php');
-    exit();
-    
-}
+require_once('./database/db_config.php');
 ?>
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
