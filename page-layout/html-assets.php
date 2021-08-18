@@ -37,4 +37,10 @@
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="./app-assets/css/custom/custom.css">
     <!-- END: Custom CSS-->
+
+    <!-- Diagram  -->
+    
+    <link rel="stylesheet" href="./app-assets/js/dhtmlx/diagram/codebase/diagram.css">
+  <link rel="stylesheet" href="./app-assets/js/dhtmlx/diagram/samples/common/dhx_samples.css">
+
 </head>

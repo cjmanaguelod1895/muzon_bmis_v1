@@ -67,7 +67,6 @@ require_once('./database/db_config.php');
                                                 
                                                 <th>Name</th>
                                                 <th>Username</th>
-                                                <th>Password</th>
                                                 <th>Level Access</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
@@ -79,12 +78,12 @@ require_once('./database/db_config.php');
                                                include ('./database/db_config.php');
   
 
-                                                    $squery = mysqli_query($conn, "SELECT ua.acc_ID,bod.official_ID,rd.res_fName,rd.res_mName,rd.res_lName,rs.suffix,ua.acc_username,ua.acc_password,us.status_Name,us.status_ID,rp.position_Name FROM `user_account` ua 
+                                                    $squery = mysqli_query($conn, "SELECT ua.acc_ID,bod.official_ID,rd.res_fName,rd.res_mName,rd.res_lName,rs.suffix,ua.acc_username,ua.acc_password,us.status_Name,us.status_ID,rp.position_Name, rp.position_ID FROM `user_account` ua 
                                                     LEFT JOIN brgy_official_detail bod ON ua.official_ID = bod.official_ID 
                                                     LEFT JOIN resident_detail rd ON bod.res_ID = rd.res_ID 
                                                     LEFT JOIN ref_position rp ON rp.position_ID = ua.position_ID
                                                     LEFT JOIN ref_suffixname rs ON rd.suffix_ID = rs.suffix_ID
-                                                    LEFT JOIN user_status us ON ua.status_ID = us.status_ID ORDER BY ua.status_ID ASC");
+                                                    LEFT JOIN user_status us ON ua.status_ID = us.status_ID ORDER BY ua.acc_created DESC");
                                                     while($row = mysqli_fetch_array($squery))
                                                     {
                                                         $suffix = $row['suffix'];
@@ -100,24 +99,32 @@ require_once('./database/db_config.php');
                                                         <tr>
                                                         <td>'.$row['res_fName']." ".$row['res_mName'].". ".$row['res_lName']." ".$suffix.'</td>
                                                             <td>'.$row['acc_username'].'</td>
-                                                            <td class="hidetext">'.$crypt.'</td>
+                                                            
                                                             <td>'.$row['position_Name'].'</td>';
 
                                                             if($row['status_ID'] == 2){
-                                                            echo '<td><span class="chip green lighten-5"><span class="green-text">'.$row['status_Name'].'</span></td>
-                                                            <td>';
-                                                            }else{
+                                                               
                                                                 echo '<td><span class="chip red lighten-5">
                                                                 <span class="red-text">
                                                                 '.$row['status_Name'].'
                                                                 </span></td>
                                                                 <td>
                                                                 ';
+                                                           
+                                                            }else{
+                                                                echo '<td><span class="chip green lighten-5"><span class="green-text">'.$row['status_Name'].'</span></td>
+                                                                <td>';
                                                             }
 
                                                             echo '
-                                                            <a href="#" data-target="#editModal'.$row['acc_ID'].'" data-toggle="modal"><i class="material-icons">edit</i></a>
+                                                            <a href="#updateCurrentUser_'.$row['acc_ID'].'" class="modal-trigger" data-id="'.$row['acc_ID'].'" ><i class="material-icons">edit</i></a>
                                                             </td>';
+
+                                                            include './modals/update-current-user.php';
+
+                                                            // echo "
+                                                            // <a href='#updateCurrentUser".$row['acc_ID']."' class='modal-trigger'> <i class='material-icons'>edit</i></a>
+                                                            // </td>";
 
                                                         // include "edit_modal.php";
                                                         // include "endterm_modal.php";
@@ -138,6 +145,7 @@ require_once('./database/db_config.php');
         </div>
             <!-- Modal -->
       <?php include './modals/add-new-user.php' ?>
+
     <!-- END: Page Modal-->
     </div>
     <!-- END: Page Main-->

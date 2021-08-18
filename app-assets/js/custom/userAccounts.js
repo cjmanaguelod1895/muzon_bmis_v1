@@ -22,15 +22,15 @@
 
 $(document).ready(function() {
 
-    $('#official').hide();
-    $('#mySelect').on('change', function(e) {
+    $('#mySelectAdd').on('change', function(e) {
+
         var optionSelected = $("option:selected", this);
         var selected = this.value;
         if (selected == 10) {
-            $('#official').show();
+            $('#commiteeDiv').css({ "display": "block" });
         } else {
 
-            $('#official').hide();
+            $('#commiteeDiv').css({ "display": "none" });
         }
 
     });
@@ -188,26 +188,25 @@ $(document).ready(function() {
     });
 
 
-    $("#canelButton").click(function() {
-        var confirmation = confirm("Are you sure you want to cancel this?");
-        if (confirmation) {
-            setTimeout(() => {
-                location.reload();
-
-            }, 2000);
-        }
+    //initialize all modals
+    $('.modal').modal({
+        dismissible: false, // Modal can be dismissed by clicking outside of the modal
+        opacity: .5, // Opacity of modal background
+        inDuration: 300, // Transition in duration
+        outDuration: 200, // Transition out duration
+        ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+            // alert("Ready");
+            console.log(modal, trigger);
+        },
+        complete: function() { alert('Closed'); } // Callback for Modal close
     });
-
-
-
-
 
 
     //Load Datatable
     var usersTable;
     if ($("#users-list-datatable").length > 0) {
         usersTable = $("#users-list-datatable").DataTable({
-            responsive: false,
+            responsive: true,
             // 'columnDefs': [{
             //     "targets": [1],
             //     "visible": true
@@ -306,3 +305,23 @@ $(document).ready(function() {
 
 
 });
+
+// $("#updateCurrentUser").click(function() {
+//     alert("test");
+//     var ids = $(this).attr('data-id');
+//     // $("#idkl").val(ids);
+//     $('#updateCurrentUser').modal('show');
+//     console.log(ids);
+// });
+
+//Close Modal
+function closeModal() {
+    var confirmation = confirm("Are you sure you want to cancel this?");
+
+    if (confirmation) {
+        setTimeout(() => {
+            location.reload();
+
+        }, 2000);
+    }
+}

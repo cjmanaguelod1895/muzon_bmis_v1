@@ -43,3 +43,6 @@
 
 
     <!-- END PAGE LEVEL JS-->
+
+    <!-- Diagram -->
+    <script type="text/javascript" src="./app-assets/js/dhtmlx/diagram/codebase/diagram.js"></script>
