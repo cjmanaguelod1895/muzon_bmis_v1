@@ -47,7 +47,7 @@ $user_data = mysqli_fetch_array($user_sql);
     </li>
     <li class="bold"><a class="waves-effect waves-cyan " href="app-calendar.html"><i class="material-icons">today</i><span class="menu-title" data-i18n="Calendar">Reports</span></a>
     </li>
-    <li class="bold"><a class="waves-effect waves-cyan " href="app-calendar.html"><i class="material-icons">today</i><span class="menu-title" data-i18n="Calendar">Setup</span></a>
+    <li class="bold"><a class="waves-effect waves-cyan " href="/bmis_v1/system-setup.php"><i class="material-icons">today</i><span class="menu-title" data-i18n="Calendar">System Setup</span></a>
     </li>
     </li>
     <li class="navigation-header"><a class="navigation-header-text">Setup</a><i class="navigation-header-icon material-icons">more_horiz</i>

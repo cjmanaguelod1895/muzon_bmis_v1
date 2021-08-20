@@ -3,6 +3,7 @@
 include ('../database/db_config.php');
 $db=$conn;// database connection  
 
+//Create New User
 if (isset($_POST['createNewUser'])) {
 
   $createNewUserData = json_decode($_POST['createNewUser'], true);
@@ -16,23 +17,6 @@ if (isset($_POST['createNewUser'])) {
  $conpassword  = legal_input($createNewUserData['conpassword']);
  $Commitee  = legal_input($createNewUserData['commitee']);
 
-// //Convert TermStart and TermEnd date
-// $date1 = strtotime($termStart);
-// $date2 = strtotime($termEnd);
-
-
-// $convertedTermStart = date('Y-m-d',$date1);
-// $convertedTermEnd = date('Y-m-d',$date2);
-
- 
-   
-// if(!empty($sPosition) && !empty($completeName) && !empty($pcontact) && !empty($paddress) && !empty($termStart)
-// && !empty($termEnd)){
-//     //  Sql Query to insert user data into database table
-//     insert_data($sPosition, $completeName,$pcontact,$paddress,$convertedTermStart, $convertedTermEnd);
-// }else{
-//  echo "All fields are required";
-// }
 
 //query for checking user is exist
 $sql = mysqli_query($conn,"SELECT * FROM `user_account` WHERE  acc_username = '$username'");
@@ -93,5 +77,8 @@ function legal_input($value) {
   $value = htmlspecialchars($value);
   return $value;
 }
+
+
+
 
 ?>
