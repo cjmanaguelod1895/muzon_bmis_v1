@@ -61,7 +61,7 @@ function defaultValidationFunction(stepperForm, activeStepContent) {
     return true;
 }
 
-$('.btn-reset').on('click', function () {
+$('.btn-reset').on('click', function() {
     horizStepperInstace.openStep(0);
     linearStepperInstace.openStep(0);
     nonLinearStepperInstace.openStep(0);

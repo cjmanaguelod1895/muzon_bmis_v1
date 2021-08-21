@@ -46,3 +46,8 @@
 
     <!-- Diagram -->
     <script type="text/javascript" src="./app-assets/js/dhtmlx/diagram/codebase/diagram.js"></script>
+           <!-- Form Stepper -->
+           <script src="./app-assets/vendors/materialize-stepper/materialize-stepper.min.js"></script>
+
+
+

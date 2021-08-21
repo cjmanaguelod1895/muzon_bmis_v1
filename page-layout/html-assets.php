@@ -39,8 +39,17 @@
     <!-- END: Custom CSS-->
 
     <!-- Diagram  -->
-    
     <link rel="stylesheet" href="./app-assets/js/dhtmlx/diagram/codebase/diagram.css">
-  <link rel="stylesheet" href="./app-assets/js/dhtmlx/diagram/samples/common/dhx_samples.css">
+    <link rel="stylesheet" href="./app-assets/js/dhtmlx/diagram/samples/common/dhx_samples.css">
+
+    <!-- Form Wizard -->
+    <link rel="stylesheet" type="text/css" href="./app-assets/vendors/materialize-stepper/materialize-stepper.min.css">
+    <link rel="stylesheet" type="text/css" href="./app-assets/css/pages/form-wizard.css">
+
+    <!-- Form Select 2 -->
+    <link rel="stylesheet" href="./app-assets/vendors/select2/select2.min.css" type="text/css">
+    <link rel="stylesheet" href="./app-assets/vendors/select2/select2-materialize.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="./app-assets/css/pages/form-select2.css">
+
 
 </head>

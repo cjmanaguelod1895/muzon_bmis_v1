@@ -39,7 +39,7 @@ $user_data = mysqli_fetch_array($user_sql);
     </li>
     <!-- Settings -->
 
-    <li class="bold"><a class="waves-effect waves-cyan " href="app-calendar.html"><i class="material-icons">today</i><span class="menu-title" data-i18n="Calendar">Resident Profiling</span></a>
+    <li class="bold"><a class="waves-effect waves-cyan " href="/bmis_v1/resident-profiling.php"><i class="material-icons">today</i><span class="menu-title" data-i18n="Calendar">Resident Profiling</span></a>
     </li>
     <li class="bold"><a class="waves-effect waves-cyan " href="app-calendar.html"><i class="material-icons">today</i><span class="menu-title" data-i18n="Calendar">Announcements</span></a>
     </li>
