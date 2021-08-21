@@ -72,8 +72,27 @@ if(isset($_SESSION['user_session']))
                                 </div>
                             </div>
                         <div class="row">
+                        <?php
+      $sql = mysqli_query($conn,"SELECT * FROM `ref_logo` WHERE logo_ID = 1");
+          
+      $brgy_logo = mysqli_fetch_array($sql);
+    
+      ?>
                                         <div class="col s12 center-align">
-                                            <img class="responsive-img circle z-depth-5" width="150" src="./app-assets/images/gallery/logo.png" alt="">
+
+                                        <?php 
+                    if (isset($brgy_logo[1])) {
+                        $img  = $brgy_logo[1];
+                        ?>
+                        <img class="responsive-img circle z-depth-5" width="150" src="<?php echo $img ?>" />
+                        <?php
+                    } 
+                    else{
+                      ?>
+                      <img id="blah" src="./app-assets/images/gallery/logo.png" class="responsive-img circle z-depth-5" width="150"/>
+                      <?php
+                    }
+                    ?>
                                             <br>
                                         </div>
                                     </div>
@@ -170,9 +189,7 @@ if(isset($_SESSION['user_session']))
           console.log(xhr.responseText);
         },
         success: function(response) {
-          console.log(response);
           form.find(':submit').attr('disabled', false);
-		  console.log(response);
           if (response.status == 1) {
             // handling success response
             //window.location.href = '/php_tutorial/dashboard.php';

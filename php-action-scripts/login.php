@@ -54,7 +54,6 @@ if (isset($_POST['action']) == 'login') {
 				else
 				{
 
-					print "<script>alert("+ $_SERVER['DOCUMENT_ROOT'] +") </script>";
 
 					$response = array(
 						'status' => 0,
