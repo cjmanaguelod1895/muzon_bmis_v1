@@ -1,3 +1,27 @@
+<?php
+session_start();
+include ('./database/db_config.php');
+if(isset($_SESSION['user_session']))
+{      
+    $user=$_SESSION['user_session'];// passing the session user to new user variable
+           
+    $query = mysqli_query($conn,"SELECT acc_ID FROM user_account WHERE acc_ID='$user'"); 
+            //SQL query to fetch information of registerd users and finds user match.
+            
+
+            
+    $rows = mysqli_fetch_assoc($query);
+    
+    
+     if (isset($rows['acc_ID'])) //checking if acclevel is equal to 0
+     {   
+         header("location: /bmis_v1/dashboard.php");// retain to user dashboard
+     }
+       
+}
+
+?>
+
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 <!-- Include DB connection -->
@@ -188,6 +212,8 @@
     }   
    
     });
+
+
    
     </script>
 

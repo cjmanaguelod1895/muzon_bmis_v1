@@ -1,6 +1,6 @@
 <?php
 // Establishing Connection with Server by passing server_name, user_id and password as a parameter
-require_once('../database/db_config.php');
+// require_once('../database/db_config.php');
 
 session_start();// Starting Session
 // Storing Session

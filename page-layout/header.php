@@ -45,7 +45,8 @@
                         <li><a class="grey-text text-darken-1" href="page-faq.html"><i class="material-icons">help_outline</i> Help</a></li>
                         <li class="divider"></li>
                         <li><a class="grey-text text-darken-1" href="user-lock-screen.html"><i class="material-icons">lock_outline</i> Lock</a></li>
-                        <li><a class="grey-text text-darken-1"  href="/bmis_v1/php-action-scripts/logout.php"><i class="material-icons">keyboard_tab</i> Logout</a></li>
+                        <!-- <li><a class="grey-text text-darken-1"  href="./bmis_v1/php-action-scripts/logout.php" target="_top"><i class="material-icons">keyboard_tab</i> Logout</a></li> -->
+                        <li><a class="grey-text text-darken-1" id="testLogout" href="#" ><i class="material-icons">keyboard_tab</i> Logout</a></li>
                     </ul>
                 </div>
                 <nav class="display-none search-sm">
@@ -62,3 +63,28 @@
             </nav>
         </div>
     </header>
+
+    <?php include ('./page-layout/html-vendors.php');  ?>
+
+    <script>
+        $("#testLogout").click(function (e) { 
+            e.preventDefault();
+
+            var url = "/bmis_v1/php-action-scripts/logout.php";
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: { logout: JSON.stringify({})},
+                success: function (response) {
+                    console.log(response);
+
+                    window.location.href  = "/BMIS_V1/login.php"; 
+                }
+            });
+           
+        });
+    </script>
+
+  
+

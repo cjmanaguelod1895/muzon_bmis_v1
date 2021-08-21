@@ -2,6 +2,7 @@
 session_start(); // Starting Session
 include ('../database/db_config.php');
 $error=''; // Variable To Store Error Message
+
 if (isset($_POST['action']) == 'login') {
 		if (empty($_POST['username']) || empty($_POST['password'])) 
 			{

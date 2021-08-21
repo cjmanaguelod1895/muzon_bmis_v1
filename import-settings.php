@@ -1,6 +1,6 @@
 <?php
-session_start();
 require_once('./database/db_config.php');
+require_once('./php-action-scripts/session.php');
 ?>
 
 <!DOCTYPE html>
